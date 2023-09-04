@@ -1,9 +1,7 @@
 import Header from './components/Header'
 
 function MainPage() {
-  return (
-    <Header />
-  )
+  return null
 }
 
 export default MainPage
