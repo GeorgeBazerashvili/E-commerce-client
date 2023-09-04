@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .header-input {
+    transition: all .3s ease-in-out;
+    position: absolute;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
+.active {
+  top: 5rem;
+  visibility: visible;
+  transition: all .3s ease-in-out;
+  opacity: 1;
+}
