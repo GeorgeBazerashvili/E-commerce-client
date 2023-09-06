@@ -1,9 +1,7 @@
-import Header from './components/Header'
+import Header from "./components/Header";
 
 function MainPage() {
-  return (
-    <Header />
-  )
+  return <Header />;
 }
 
-export default MainPage
+export default MainPage;
