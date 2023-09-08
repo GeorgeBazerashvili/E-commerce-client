@@ -6,7 +6,7 @@ import Login from "./pages/Login";
 import axios from "axios";
 
 function App() {
-  axios.defaults.baseURL = "https://e-commerce-rest.onrender.com/";
+  axios.defaults.baseURL = "https://e-commerce-rest.onrender.com";
 
   return (
     <Routes>

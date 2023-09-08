@@ -24,6 +24,7 @@ function Header() {
   };
 
   const checkCookies = () => {
+    console.log(Cookies.get("token"));
     if (Cookies.get("token")) {
       navigate("/profile");
     } else {

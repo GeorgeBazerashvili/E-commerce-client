@@ -1,12 +1,12 @@
+import { useState } from "react";
 import axios from "axios";
-import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 
-function RegisterForm() {
-  const [name, setName] = useState("");
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -14,37 +14,25 @@ function RegisterForm() {
 
     await axios
       .post(
-        "/api/authentication/register",
+        "api/authentication/login",
         {
-          username: name,
-          email: email,
-          password: password,
+          email,
+          password,
         },
         { withCredentials: true }
       )
-
       .then(() => navigate("/"))
-      .catch((errorMessage) => {
-        let errors = [];
-        const errorMessages = errorMessage.response.data.error.errors;
-        console.log(errorMessages);
-        for (const error in errorMessages) {
-          errors.push(error);
-        }
-
-        if (errorMessages[errors[0]].message) {
-          swal({
-            title: errorMessages[errors[0]].message,
-            icon: "error",
-            // @ts-ignore
-            button: "Close",
-          });
-        }
-      });
+      .catch((error) =>
+        swal({
+          title: error.response.data.message,
+          icon: "error",
+          // @ts-ignore
+          button: "Close",
+        })
+      );
   };
-
   return (
-    <div>
+    <>
       <Link
         to="/"
         className="absolute top-4 left-4 border-2 border-black rounded-md text-xl px-4 py-3"
@@ -54,17 +42,8 @@ function RegisterForm() {
       <form
         onSubmit={handleSubmit}
         className="flex flex-col absolute top-1/2 left-1/2 -translate-y-2/3
-       -translate-x-1/2 py-6 px-4 rounded-md max-w-sm w-11/12 border-2 border-black font-mono"
+       -translate-x-1/2 py-6 px-4 rounded-md w-11/12 max-w-sm border-2 border-black font-mono"
       >
-        <label htmlFor="name">Username</label>
-        <input
-          type="text"
-          className="p-2 border-2 border-black rounded-sm"
-          id="name"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
-        />
-
         <label htmlFor="email">Email</label>
         <input
           type="email"
@@ -87,18 +66,18 @@ function RegisterForm() {
           onSubmit={handleSubmit}
           className="border-black border-2 mt-2 rounded-sm p-2 text-xl"
         >
-          Register
+          Login
         </button>
 
         <p className="mt-1">
-          If you already have an account{" "}
-          <Link to="/login" className="font-bold">
-            Login
+          If you don't have an account{" "}
+          <Link to="/register" className="font-bold">
+            Register
           </Link>
         </p>
       </form>
-    </div>
+    </>
   );
 }
 
-export default RegisterForm;
+export default LoginForm;
