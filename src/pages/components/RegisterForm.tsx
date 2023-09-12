@@ -13,15 +13,11 @@ function RegisterForm() {
     e.preventDefault();
 
     await axios
-      .post(
-        "/api/authentication/register",
-        {
-          username: name,
-          email: email,
-          password: password,
-        },
-        { withCredentials: true }
-      )
+      .post("/api/authentication/register", {
+        username: name,
+        email: email,
+        password: password,
+      })
 
       .then(() => navigate("/"))
       .catch((errorMessage) => {

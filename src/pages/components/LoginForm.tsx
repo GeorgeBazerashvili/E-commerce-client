@@ -13,14 +13,10 @@ function LoginForm() {
     e.preventDefault();
 
     await axios
-      .post(
-        "api/authentication/login",
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      )
+      .post("/api/authentication/login", {
+        email,
+        password,
+      })
       .then(() => navigate("/"))
       .catch((error) =>
         swal({
