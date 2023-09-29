@@ -7,7 +7,7 @@ import AdminPanel from "./pages/AdminPanel";
 import axios from "axios";
 
 function App() {
-  axios.defaults.baseURL = "https://ecommerce-rest-7nuu.onrender.com";
+  axios.defaults.baseURL = "https://ecommerce-rest-7nuu.onrender.com/";
 
   return (
     <Routes>
