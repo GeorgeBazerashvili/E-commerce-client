@@ -13,28 +13,30 @@ function RegisterForm() {
     e.preventDefault();
 
     await axios
-      .post("/api/authentication/register", {
+      .post("/auth/register", {
         username: name,
         email: email,
         password: password,
       })
 
-      .then(() => navigate("/"))
-      .catch((errorMessage) => {
-        let errors = [];
-        const errorMessages = errorMessage.response.data.error.errors;
-        console.log(errorMessages);
-        for (const error in errorMessages) {
-          errors.push(error);
-        }
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        navigate("/profile");
+      })
+      .catch((err) => {
+        const info = err.response.data.error.errors;
+        const error = Object.keys(info)[0];
+        const errorMessage = info[error].message;
 
-        if (errorMessages[errors[0]].message) {
+        if (errorMessage) {
           swal({
-            title: errorMessages[errors[0]].message,
+            title: errorMessage,
             icon: "error",
             // @ts-ignore
             button: "Close",
           });
+        } else {
+          console.error(err.message);
         }
       });
   };

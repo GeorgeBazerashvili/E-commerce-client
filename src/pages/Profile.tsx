@@ -1,16 +1,11 @@
-import { useEffect } from "react";
-import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import Interface from "./components/Interface";
 
 function Profile() {
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (!Cookies.get("token")) {
-      navigate("/");
-    }
-  }, []);
-
-  return <div>Profile</div>;
+  return (
+    <>
+      <Interface />
+    </>
+  );
 }
 
 export default Profile;

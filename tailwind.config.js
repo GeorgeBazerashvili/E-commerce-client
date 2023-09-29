@@ -2,8 +2,11 @@
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        js: "url(./src/assets/webps/js.webp)",
+      },
+    },
   },
-  plugins: []
-}
-
+  plugins: [],
+};

@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import VanillaLogo from "../../assets/pngs/caa88946192de66f31ae43aea2fc.png";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
@@ -23,9 +22,9 @@ function Header() {
     }
   };
 
-  const checkCookies = () => {
-    console.log(Cookies.get("token"));
-    if (Cookies.get("token")) {
+  const checkToken = () => {
+    console.log(localStorage.getItem("token"));
+    if (localStorage.getItem("token")) {
       navigate("/profile");
     } else {
       navigate("/register");
@@ -58,7 +57,7 @@ function Header() {
       <div className="right-side gap-10 flex max-xl:gap-2">
         <div
           className="gap-2 cursor-pointer items-center flex"
-          onClick={checkCookies}
+          onClick={checkToken}
         >
           <i className="fa-solid fa-user"></i>
           <p className="max-xl:hidden">Profile</p>

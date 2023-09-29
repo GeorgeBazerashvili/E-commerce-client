@@ -13,11 +13,19 @@ function LoginForm() {
     e.preventDefault();
 
     await axios
-      .post("/api/authentication/login", {
-        email,
-        password,
+      .post("/auth/login", {
+        email: email,
+        password: password,
       })
-      .then(() => navigate("/"))
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        console.log(res.data);
+        if (res.data.role === "admin") {
+          navigate("/admin");
+        } else if (res.data.role === "user") {
+          navigate("/profile");
+        }
+      })
       .catch((error) =>
         swal({
           title: error.response.data.message,
