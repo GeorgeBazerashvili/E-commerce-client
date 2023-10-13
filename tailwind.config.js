@@ -6,6 +6,9 @@ export default {
       backgroundImage: {
         js: "url(./src/assets/webps/js.webp)",
       },
+      gridTemplateColumns: {
+        auto: "repeat(auto-fill, 290px)",
+      },
     },
   },
   plugins: [],

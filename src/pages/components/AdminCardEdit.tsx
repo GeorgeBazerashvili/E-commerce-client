@@ -1,17 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Source } from "../../App";
 
-function AdminForm() {
+function AdminCardEdit() {
+  const source = useContext(Source);
   const navigate = useNavigate();
-  const [greeting, setGreeting] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
 
-  function handleClick() {
-    navigate("/admincards");
+  async function handleSubmit(e: any) {
+    e.preventDefault();
+    await axios
+      .put(
+        "/update",
+        {
+          name,
+          description,
+          image,
+          price,
+          //@ts-ignore
+          id: source.id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      )
+      .then((res) => console.log(res.data))
+      .catch((err) => console.log(err));
   }
 
   useEffect(() => {
@@ -28,8 +48,6 @@ function AdminForm() {
           .then((res) => {
             if (res.data.response.role !== "ADMIN") {
               navigate("/");
-            } else {
-              setGreeting(res.data.message);
             }
           })
           .catch(() => {
@@ -38,41 +56,32 @@ function AdminForm() {
           });
       })();
     }
+
+    (async function getCard() {
+      await axios
+        .post("/findcard", {
+          //@ts-ignore
+          ID: source.id,
+        })
+        .then((res) => {
+          //@ts-ignore
+          const card = res.data.card;
+          //@ts-ignore
+          setDescription(card.description);
+          //@ts-ignore
+          setName(card.name);
+          //@ts-ignore
+          setPrice(card.price);
+          //@ts-ignore
+          setImage(card.image);
+        })
+        .catch((err) => console.log(err));
+    })();
   }, []);
 
-  useEffect(() => {
-    console.log(greeting);
-  }, [greeting]);
-
-  async function handleSubmit(e: any) {
-    e.preventDefault();
-
-    await axios
-      .post(
-        "/admin/createcard",
-        { name, description, image, price },
-        {
-          headers: {
-            Authorization: "Bearer " + localStorage.getItem("token"),
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((err) => {
-        navigate("/");
-        localStorage.removeItem("token");
-        console.error(err.message);
-      });
-  }
-
   return (
-    <div className="w-full h-screen flex flex-col justify-center items-center">
-      <h1 className="text-2xl font-bold mb-2 text-center text-white">
-        {greeting} TO ADMINPANEL
-      </h1>
-      <form className="flex flex-col gap-2 mb-5" onSubmit={handleSubmit}>
+    <div className="w-full min-h-screen bg-js flex justify-center items-center">
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <input
           type="text"
           className="w-60 p-2 font-mono text-xl font-bold"
@@ -101,22 +110,12 @@ function AdminForm() {
           value={price}
           onChange={(e) => setPrice(e.target.value)}
         />
-        <button
-          onSubmit={handleSubmit}
-          className="p-2 w-60 border-2 border-white text-xl font-bold font-mono rounded-md text-white"
-        >
-          AddCard
+        <button className="p-2 w-60 border-2 border-white text-xl font-bold font-mono rounded-md text-white">
+          Update Card
         </button>
       </form>
-
-      <button
-        onClick={handleClick}
-        className="p-2 w-60 border-2 border-white text-xl font-bold font-mono rounded-md text-white"
-      >
-        See Cards
-      </button>
     </div>
   );
 }
 
-export default AdminForm;
+export default AdminCardEdit;

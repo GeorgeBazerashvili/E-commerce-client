@@ -32,7 +32,7 @@ function Header() {
   };
 
   return (
-    <header className="flex items-center gap-6 px-5 font-serif w-full fixed justify-between bg-white z-10 max-xl:px-1">
+    <header className="flex items-center gap-6 px-5 font-serif w-full fixed justify-between bg-white z-10 top-0 left-0 max-xl:px-1">
       <div className="w-40 left-side max-lg:w-32">
         <img
           src={VanillaLogo}
