@@ -11,6 +11,17 @@ function AdminCardEdit() {
   const [image, setImage] = useState("");
   const [price, setPrice] = useState("");
 
+  async function deleteItem() {
+    console.log(localStorage.getItem("token"));
+    await axios
+      .delete(
+        //@ts-ignore
+        `/deletecard/${source.id}`
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
+
   async function handleSubmit(e: any) {
     e.preventDefault();
     await axios
@@ -80,7 +91,7 @@ function AdminCardEdit() {
   }, []);
 
   return (
-    <div className="w-full min-h-screen bg-js flex justify-center items-center">
+    <div className="w-full min-h-screen bg-js flex justify-center items-center flex-col">
       <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -114,6 +125,12 @@ function AdminCardEdit() {
           Update Card
         </button>
       </form>
+      <button
+        onClick={deleteItem}
+        className="p-2 w-60 mt-4 border-2 border-white text-xl font-bold font-mono rounded-md text-white"
+      >
+        Delete Card
+      </button>
     </div>
   );
 }

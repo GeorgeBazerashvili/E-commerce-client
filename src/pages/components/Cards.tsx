@@ -27,7 +27,7 @@ function Cards() {
   }, []);
 
   return (
-    <ul className="mt-28 list-none grid grid-cols-auto gap-2 justify-between pb-2">
+    <ul className="mt-28 list-none grid grid-cols-auto gap-2 justify-between py-4">
       {isLoading
         ? Array.from({ length: 10 }).map((_, index) => (
             <div
@@ -43,7 +43,7 @@ function Cards() {
         : cards.map((card, index) => (
             <div
               key={index}
-              className=" w-72 h-72 mb-4 border-2 border-black rounded-md p-2"
+              className=" w-72 h-72 mb-4 border-2 border-black rounded-md p-2 bg-gray-100"
             >
               {/* @ts-ignore*/}
               <li className="font-bold">{card.name}</li>
@@ -58,7 +58,7 @@ function Cards() {
               <li>{card.description}</li>
               <li className="text-right mt-0.5 font-bold">
                 {/* @ts-ignore*/}
-                {card.price}VC
+                {Math.round(card.price)}VC
               </li>
             </div>
           ))}

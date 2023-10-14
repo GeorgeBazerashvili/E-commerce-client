@@ -3,16 +3,13 @@ import VanillaLogo from "../../assets/pngs/caa88946192de66f31ae43aea2fc.png";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
+  //@ts-ignore
   const [vanillaCoin, setVanillaCoin] = useState(1000);
+  //@ts-ignore
   const [amount, setAmount] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setVanillaCoin(1000);
-    setAmount(null);
-  }, []);
 
   const changeActiveness = () => {
     if (window.innerWidth <= 1024) {
@@ -23,7 +20,6 @@ function Header() {
   };
 
   const checkToken = () => {
-    console.log(localStorage.getItem("token"));
     if (localStorage.getItem("token")) {
       navigate("/profile");
     } else {
@@ -32,7 +28,7 @@ function Header() {
   };
 
   return (
-    <header className="flex items-center gap-6 px-5 font-serif w-full fixed justify-between bg-white z-10 top-0 left-0 max-xl:px-1">
+    <header className="flex items-center gap-6 px-5 font-serif w-full fixed justify-between bg-slate-300 z-10 top-0 left-0 max-xl:px-1">
       <div className="w-40 left-side max-lg:w-32">
         <img
           src={VanillaLogo}

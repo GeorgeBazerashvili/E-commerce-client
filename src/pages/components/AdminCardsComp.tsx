@@ -72,7 +72,7 @@ function AdminCardsComp() {
               <li>{card.description}</li>
               <li className="text-right mt-0.5 font-bold">
                 {/* @ts-ignore*/}
-                {card.price}VC
+                {Math.round(card.price)}VC
               </li>
             </div>
           );
