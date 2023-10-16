@@ -1,9 +1,14 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Skeleton from "react-loading-skeleton";
+import { useNavigate } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Source } from "../../App";
 
 function Cards() {
+  const source = useContext(Source);
+  const navigate = useNavigate();
+
   const [cards, setCards] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -26,6 +31,40 @@ function Cards() {
     getCards();
   }, []);
 
+  useEffect(() => {
+    //@ts-ignore
+    console.log(source.amount);
+    //@ts-ignore
+  }, [source.amount]);
+
+  useEffect(() => {
+    (async function filterCards() {
+      await axios
+        .get("/cards")
+        .then((res) => {
+          setCards(res.data.data);
+        })
+        .catch((err) => console.log(err));
+
+      setCards((prev) => {
+        return prev.filter((card) => {
+          return (
+            //@ts-ignore
+            card.name
+              .toLowerCase()
+              //@ts-ignore
+              .includes(source.searchWord.toLowerCase())
+          );
+        });
+      });
+    })();
+    //@ts-ignore
+  }, [source.searchWord]);
+
+  useEffect(() => {
+    //@ts-ignore
+  }, [cards]);
+
   return (
     <ul className="mt-28 list-none grid grid-cols-auto gap-2 justify-between py-4">
       {isLoading
@@ -34,16 +73,22 @@ function Cards() {
               key={index}
               className="w-64 border-2 border-black rounded-md p-2"
             >
-              <Skeleton height={20} style={{ marginBottom: "10px" }} />
-              <Skeleton height={20} style={{ marginBottom: "10px" }} />
-              <Skeleton height={150} style={{ marginBottom: "10px" }} />
-              <Skeleton height={20} style={{ marginBottom: "10px" }} />
+              <Skeleton height={20} className="bg-orange-50 mt-3" />
+              <Skeleton height={20} className="bg-orange-50 mt-3" />
+              <Skeleton height={150} className="bg-orange-50 mt-3" />
+              <Skeleton height={20} className="bg-orange-50 mt-3" />
             </div>
           ))
         : cards.map((card, index) => (
             <div
+              //@ts-ignore
+              onClick={() => {
+                //@ts-ignore
+                source.setId(card._id);
+                navigate("/buy");
+              }}
               key={index}
-              className=" w-72 h-72 mb-4 border-2 border-black rounded-md p-2 bg-gray-100"
+              className=" w-72 h-72 mb-4 border-2 border-black rounded-md p-2 bg-gray-100 cursor-pointer"
             >
               {/* @ts-ignore*/}
               <li className="font-bold">{card.name}</li>

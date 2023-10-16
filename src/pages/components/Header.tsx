@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useContext } from "react";
 import VanillaLogo from "../../assets/pngs/caa88946192de66f31ae43aea2fc.png";
 import { useNavigate } from "react-router-dom";
+import { Source } from "../../App";
 
 function Header() {
+  const source = useContext(Source);
   //@ts-ignore
   const [vanillaCoin, setVanillaCoin] = useState(1000);
   //@ts-ignore
-  const [amount, setAmount] = useState(null);
   const [isActive, setIsActive] = useState(false);
 
   const navigate = useNavigate();
@@ -43,6 +44,10 @@ function Header() {
           className={`header-input border-2 p-2 text-xl w-full flex1 top-0 relative rounded-md border-gray-200 ${
             isActive == true ? "active" : ""
           }`}
+          //@ts-ignore
+          onChange={(e) => source.setSearchWord(e.target.value)}
+          //@ts-ignore
+          value={source.searchWord}
         />
         <i
           className="fa-solid cursor-pointer fa-magnifying-glass"
@@ -63,7 +68,10 @@ function Header() {
           <i className="fa-solid fa-cart-shopping"></i>
 
           <div className="flex flex-col max-xl:hidden">
-            <p className="relative p-1 border-black top-2 left-2">{amount}</p>
+            <p className="relative p-1 border-black top-2 left-2">
+              {/* @ts-ignore */}
+              {source.amount}
+            </p>
             <p className="relative bottom-1 left-1">{vanillaCoin}vc</p>
           </div>
         </div>
