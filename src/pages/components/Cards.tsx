@@ -66,9 +66,9 @@ function Cards() {
   }, [cards]);
 
   return (
-    <ul className="mt-28 list-none grid grid-cols-auto gap-2 justify-between py-4">
+    <ul className="mt-24 list-none grid grid-cols-auto gap-2 pt-4 place-content-center">
       {isLoading
-        ? Array.from({ length: 10 }).map((_, index) => (
+        ? Array.from({ length: 30 }).map((_, index) => (
             <div
               key={index}
               className="w-64 border-2 border-black rounded-md p-2"

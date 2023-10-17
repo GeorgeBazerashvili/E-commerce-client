@@ -21,7 +21,7 @@ function RegisterForm() {
 
       .then((res) => {
         localStorage.setItem("token", res.data.token);
-        navigate("/profile");
+        navigate("/");
       })
       .catch((err) => {
         const info = err.response.data.error.errors;

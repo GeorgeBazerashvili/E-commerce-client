@@ -1,12 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import VanillaLogo from "../../assets/pngs/caa88946192de66f31ae43aea2fc.png";
 import { useNavigate } from "react-router-dom";
 import { Source } from "../../App";
+import axios from "axios";
 
 function Header() {
   const source = useContext(Source);
-  //@ts-ignore
-  const [vanillaCoin, setVanillaCoin] = useState(1000);
   //@ts-ignore
   const [isActive, setIsActive] = useState(false);
 
@@ -27,6 +26,23 @@ function Header() {
       navigate("/register");
     }
   };
+
+  useEffect(() => {
+    (async function getBalance() {
+      await axios
+        .get("/info", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        .then((res) => {
+          //@ts-ignore
+          source.setVanillaCoin(res.data.response.balance);
+          console.log(res.data);
+        })
+        .catch((err) => console.log(err.message));
+    })();
+  }, []);
 
   return (
     <header className="flex items-center gap-6 px-5 font-serif w-full fixed justify-between bg-slate-300 z-10 top-0 left-0 max-xl:px-1">
@@ -72,7 +88,8 @@ function Header() {
               {/* @ts-ignore */}
               {source.amount}
             </p>
-            <p className="relative bottom-1 left-1">{vanillaCoin}vc</p>
+            {/* @ts-ignore */}
+            <p className="relative bottom-1 left-1">{source.vanillaCoin}vc</p>
           </div>
         </div>
       </div>

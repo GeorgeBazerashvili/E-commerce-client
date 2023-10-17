@@ -19,11 +19,10 @@ function LoginForm() {
       })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
-        console.log(res);
         if (res.data.role === "admin") {
           navigate("/admin");
         } else if (res.data.role === "user") {
-          navigate("/profile");
+          navigate("/");
         }
       })
       .catch((error) =>
