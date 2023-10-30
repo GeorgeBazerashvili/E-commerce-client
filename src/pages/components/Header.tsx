@@ -19,6 +19,20 @@ function Header() {
     }
   };
 
+  useEffect(() => {
+    (async function updateBalance() {
+      await axios
+        //@ts-ignore
+        .put(`/info/update/${source.userId}`, {
+          //@ts-ignore
+          balance: source.vanillaCoin,
+        })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+    })();
+    //@ts-ignore
+  }, [source.vanillaCoin]);
+
   const checkToken = () => {
     if (localStorage.getItem("token")) {
       navigate("/profile");

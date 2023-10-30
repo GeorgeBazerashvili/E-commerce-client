@@ -14,12 +14,13 @@ import BuyItem from "./pages/BuyItem";
 export const Source = createContext("");
 
 function App() {
-  axios.defaults.baseURL = "https://e-commerce-rest-production.up.railway.app/";
+  axios.defaults.baseURL = "http://localhost:3000";
 
   const [id, setId] = useState("");
   const [amount, setAmount] = useState(null);
   const [searchWord, setSearchWord] = useState("");
   const [vanillaCoin, setVanillaCoin] = useState(0);
+  const [userId, setUserId] = useState("");
 
   return (
     <Source.Provider
@@ -33,6 +34,8 @@ function App() {
         setAmount,
         vanillaCoin,
         setVanillaCoin,
+        userId,
+        setUserId,
       }}
     >
       <Routes>

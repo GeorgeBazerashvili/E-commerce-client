@@ -88,7 +88,7 @@ function Cards() {
                 navigate("/buy");
               }}
               key={index}
-              className=" w-72 h-72 mb-4 border-2 border-black rounded-md p-2 bg-gray-100 cursor-pointer"
+              className=" w-72 h-72 mb-4 border-2 border-black rounded-md p-2 bg-gray-100 cursor-pointer duration-200 hover:scale-105"
             >
               {/* @ts-ignore*/}
               <li className="font-bold">{card.name}</li>

@@ -7,6 +7,12 @@ function Popup({ fn }) {
   const source = useContext(Source);
   const [device, setDevice] = useState("");
   const [price, setPrice] = useState(0);
+
+  async function buy() {
+    //@ts-ignore
+    source.setVanillaCoin((prev) => prev - price);
+  }
+
   useEffect(() => {
     (async function findCard() {
       await axios
@@ -21,6 +27,16 @@ function Popup({ fn }) {
         .catch((err) => {
           console.log(err.message);
         });
+
+      await axios
+        .get("/info", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+        //@ts-ignore
+        .then((res) => source.setUserId(res.data.response._id))
+        .catch((err) => console.log(err));
     })();
   }, []);
 
@@ -38,7 +54,10 @@ function Popup({ fn }) {
         balance is {source.vanillaCoin} and will be {source.vanillaCoin - price}{" "}
         after the purchase.
       </p>
-      <button className="text-white border-2 border-white font-bold font-mono text-2xl py-0.5 px-2 w-20 absolute right-2 bottom-1 rounded-md">
+      <button
+        className="text-white border-2 border-white font-bold font-mono text-2xl py-0.5 px-2 w-20 absolute right-2 bottom-1 rounded-md"
+        onClick={buy}
+      >
         buy
       </button>
     </div>
@@ -46,3 +65,9 @@ function Popup({ fn }) {
 }
 
 export default Popup;
+
+//
+//
+//   TRY ASKING CHATGPT MAYBE IT WILL FIND OUT WE I CAN'T GET DATA FROM VANILLACOIN
+//
+//
